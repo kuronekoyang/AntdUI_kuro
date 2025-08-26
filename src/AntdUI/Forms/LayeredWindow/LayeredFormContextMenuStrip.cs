@@ -134,7 +134,7 @@ namespace AntdUI
                     if (select_index > -1)
                     {
                         var it = rectsContent[select_index];
-                        if (it.Tag is ContextMenuStripItem item && item.Sub != null && item.Sub.Length > 0)
+                        if (it.Tag is ContextMenuStripItem item && item.HasSub)
                         {
                             if (subForm == null) OpenDown(item, it.Rect, item.Sub);
                             else
@@ -221,7 +221,7 @@ namespace AntdUI
                         int tmp2 = size.Width;
                         if (has_checked) tmp2 += check_size + icon_gap;
                         if (has_icon) tmp2 += icon_size + icon_gap;
-                        if (item.Sub != null && item.Sub.Length > 0) tmp2 += icon_size + icon_gap;
+                        if (item.HasSub) tmp2 += icon_size + icon_gap;
                         if (tmp2 > maxw) maxw = tmp2;
                     }
                     else if (it is ContextMenuStripItemDivider divider) list.Add(new InRect(divider));
@@ -249,7 +249,7 @@ namespace AntdUI
                             x += icon_size + icon_gap;
                             usx += icon_size + icon_gap;
                         }
-                        if (item.Sub != null && item.Sub.Length > 0)
+                        if (item.HasSub)
                         {
                             it.RectSub = new Rectangle(it.Rect.Right - icon_gap - icon_size, it.Rect.Y + icon_xy, icon_size, icon_size);
                             usx += icon_size + icon_gap;
@@ -278,7 +278,7 @@ namespace AntdUI
                     if (!has_checked && item.Checked) has_checked = true;
                     if (!has_icon && item.HasIcon) has_icon = true;
                     if (!has_subText && item.SubText != null) has_subText = true;
-                    if (!has_subs && item.Sub != null && item.Sub.Length > 0) has_subs = true;
+                    if (!has_subs && item.HasSub) has_subs = true;
                     if (has_checked && has_icon && has_subText && has_subs) return;
                 }
             }
@@ -351,7 +351,7 @@ namespace AntdUI
                             }
                             else g.DrawText(item.Text, Font, brush, it.RectText, sfl);
 
-                            if (item.Sub != null && item.Sub.Length > 0)
+                            if (item.HasSub)
                             {
                                 using (var pen = new Pen(Colour.TextSecondary.Get("ContextMenuStrip"), 2F * Config.Dpi))
                                 {
@@ -380,7 +380,7 @@ namespace AntdUI
                             if (FontSub != null) g.DrawText(item.SubText, FontSub, brushEnabled, it.RectText, sfr);
                             g.DrawText(item.Text, Font, brushEnabled, it.RectText, sfl);
 
-                            if (item.Sub != null && item.Sub.Length > 0)
+                            if (item.HasSub)
                             {
                                 using (var pen = new Pen(Colour.TextQuaternary.Get("ContextMenuStrip"), 2F * Config.Dpi))
                                 {
@@ -467,7 +467,7 @@ namespace AntdUI
         {
             if (it.Tag is ContextMenuStripItem item)
             {
-                if (item.Sub == null || item.Sub.Length == 0)
+                if (!item.HasSub)
                 {
                     if (Config.HasAnimation(name))
                     {
@@ -578,7 +578,7 @@ namespace AntdUI
                     oldSub = hand;
                     subForm?.IClose();
                     subForm = null;
-                    if (it.Tag is ContextMenuStripItem item && item.Sub != null && item.Sub.Length > 0) OpenDown(item, it.Rect, item.Sub);
+                    if (it.Tag is ContextMenuStripItem item && item.HasSub) OpenDown(item, it.Rect, item.Sub);
                 }
                 else
                 {

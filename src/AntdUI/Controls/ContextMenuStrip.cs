@@ -278,10 +278,27 @@ namespace AntdUI
         /// </summary>
         public bool Checked { get; set; }
 
+        private IContextMenuStripItem[]? _sub;
+
         /// <summary>
         /// 子项
         /// </summary>
-        public IContextMenuStripItem[]? Sub { get; set; }
+        public IContextMenuStripItem[]? Sub
+        {
+            get
+            {
+                if (_sub == null && DelayedSubFunc != null)
+                    _sub = DelayedSubFunc(this);
+                if (_sub == null)
+                    _sub = [];
+                return _sub;
+            }
+            set => _sub = value;
+        }
+
+        public Func<ContextMenuStripItem, IContextMenuStripItem[]?>? DelayedSubFunc { get; set; }
+
+        public bool HasSub => (DelayedSubFunc != null && _sub == null) || (_sub != null && _sub.Length > 0);
 
         /// <summary>
         /// 用户定义数据

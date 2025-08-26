@@ -571,6 +571,11 @@ namespace AntdUI
                 CancelFont = font;
                 return this;
             }
+            public Config HideCancel()
+            {
+                CancelText = null;
+                return this;
+            }
 
             public Config SetOk(string? value, TTypeMini type)
             {
@@ -602,6 +607,12 @@ namespace AntdUI
             public Config SetOk(Func<Config, bool>? value)
             {
                 OnOk = value;
+                return this;
+            }
+
+            public Config HideOk()
+            {
+                OkText = null;
                 return this;
             }
 
