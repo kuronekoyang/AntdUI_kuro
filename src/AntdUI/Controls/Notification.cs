@@ -80,6 +80,17 @@ namespace AntdUI
         public static void error(Form form, string title, string text, TAlignFrom align = TAlignFrom.TR, Font? font = null, int? autoClose = null) => open(new Config(form, title, text, TType.Error, align, font, autoClose));
 
         /// <summary>
+        /// 失败通知
+        /// </summary>
+        /// <param name="owner">窗口</param>
+        /// <param name="title">标题</param>
+        /// <param name="text">内容</param>
+        /// <param name="align">位置</param>
+        /// <param name="font">字体</param>
+        /// <param name="autoClose">自动关闭时间（秒）0等于不关闭</param>
+        public static void error(IWin32Window owner, string title, string text, TAlignFrom align = TAlignFrom.TR, Font? font = null, int? autoClose = null) => open(new Config(owner, title, text, TType.Error, align, font, autoClose));
+
+        /// <summary>
         /// 普通通知
         /// </summary>
         /// <param name="form">窗口</param>
@@ -188,6 +199,16 @@ namespace AntdUI
                 Icon = _icon;
                 if (autoClose.HasValue) AutoClose = autoClose.Value;
             }
+            public Config(IWin32Window owner, string _title, string _text, TType _icon, TAlignFrom _align, Font? _font, int? autoClose)
+            {
+                Owner = owner;
+                Font = _font;
+                Title = _title;
+                Text = _text;
+                Align = _align;
+                Icon = _icon;
+                if (autoClose.HasValue) AutoClose = autoClose.Value;
+            }
 
             /// <summary>
             /// ID
@@ -197,7 +218,9 @@ namespace AntdUI
             /// <summary>
             /// 所属窗口
             /// </summary>
-            public Form Form { get; set; }
+            public Form? Form { get; set; }
+
+            public IWin32Window? Owner { get; set; }
 
             string? title;
             /// <summary>
@@ -484,14 +507,14 @@ namespace AntdUI
         {
             config = _config;
             Tag = id;
-            if (config.TopMost) Helper.SetTopMost(Handle);
+            if (config.TopMost || config.Form == null) Helper.SetTopMost(Handle);
             else config.Form.SetTopMost(Handle);
             shadow_size = (int)(shadow_size * Config.Dpi);
             if (config.Font != null) Font = config.Font;
             else if (Config.Font != null) Font = Config.Font;
-            else Font = config.Form.Font;
+            else Font = config.Form?.Font;
             font_title = config.FontTitle ?? new Font(Font.FontFamily, Font.Size * 1.14F, config.FontStyleTitle ?? Font.Style);
-            Icon = config.Form.Icon;
+            Icon = config.Form?.Icon;
             Helper.GDI(g => SetSize(RenderMeasure(g, shadow_size)));
             close_button = new ITaskOpacity(name, this);
         }
@@ -510,7 +533,7 @@ namespace AntdUI
 
         public bool IInit()
         {
-            if (SetPosition(config.Form, config.ShowInWindow ?? Config.ShowInWindowByNotification)) return true;
+            if (SetPosition(config.Form, config.Owner, config.ShowInWindow ?? Config.ShowInWindowByNotification)) return true;
             if (config.AutoClose > 0)
             {
                 ITask.Run(() =>

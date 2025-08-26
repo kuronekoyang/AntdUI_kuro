@@ -25,7 +25,7 @@ namespace AntdUI
     {
         static SvgDb()
         {
-            var datas = Properties.Resources.Custom.Split('|');
+            var datas = Properties.AntdUI_Resources.Custom.Split('|');
             Custom = new Dictionary<string, string>(datas.Length);
             foreach (string s in datas)
             {

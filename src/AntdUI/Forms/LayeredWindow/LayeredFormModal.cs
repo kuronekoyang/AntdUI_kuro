@@ -63,20 +63,23 @@ namespace AntdUI
 
             if (butt_h > 0)
             {
-                btn_ok = new Button
+                if (config.OkText != null)
                 {
-                    AutoSizeMode = TAutoSize.Width,
-                    Dock = DockStyle.Right,
-                    Location = new Point(304, 0),
-                    Name = "btn_ok",
-                    Size = new Size(64, butt_h),
-                    TabIndex = 0,
-                    Type = config.OkType,
-                    Text = config.OkText
-                };
-                config.OnButtonStyle?.Invoke("OK", btn_ok);
-                btn_ok.Click += btn_ok_Click;
-                if (config.OkFont != null) btn_ok.Font = config.OkFont;
+                    btn_ok = new Button
+                    {
+                        AutoSizeMode = TAutoSize.Width,
+                        Dock = DockStyle.Right,
+                        Location = new Point(304, 0),
+                        Name = "btn_ok",
+                        Size = new Size(64, butt_h),
+                        TabIndex = 0,
+                        Type = config.OkType,
+                        Text = config.OkText
+                    };
+                    config.OnButtonStyle?.Invoke("OK", btn_ok);
+                    btn_ok.Click += btn_ok_Click;
+                    if (config.OkFont != null) btn_ok.Font = config.OkFont;
+                }
 
                 if (config.CancelText != null)
                 {

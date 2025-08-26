@@ -377,11 +377,11 @@ namespace AntdUI
                 }
             }
 
-            string oktext = Localization.Get("OK", "确定");
+            string? oktext = Localization.Get("OK", "确定");
             /// <summary>
             /// 确认按钮文字
             /// </summary>
-            public string OkText
+            public string? OkText
             {
                 get => oktext;
                 set
@@ -568,7 +568,7 @@ namespace AntdUI
                 return this;
             }
 
-            public Config SetOk(string value, TTypeMini type)
+            public Config SetOk(string? value, TTypeMini type)
             {
                 OkText = value;
                 OkType = type;
@@ -579,12 +579,12 @@ namespace AntdUI
                 OkFont = font;
                 return this;
             }
-            public Config SetOk(string value)
+            public Config SetOk(string? value)
             {
                 OkText = value;
                 return this;
             }
-            public Config SetOk(string value, Font? font)
+            public Config SetOk(string? value, Font? font)
             {
                 OkText = value;
                 OkFont = font;
