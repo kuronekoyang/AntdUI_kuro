@@ -162,6 +162,10 @@ namespace AntdUI
         /// </summary>
         public class Config
         {
+            public Config()
+            {
+            }
+
             /// <summary>
             /// Model 配置
             /// </summary>
