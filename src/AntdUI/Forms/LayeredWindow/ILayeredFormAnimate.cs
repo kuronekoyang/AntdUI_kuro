@@ -42,17 +42,11 @@ namespace AntdUI
         public int ReadY => end_Y;
         public int ReadB => end_Y + TargetRect.Height;
 
-        internal bool SetPosition(Form? form, IWin32Window? owner, bool InWindow)
+        internal bool SetPosition(Form form, bool InWindow)
         {
             Rectangle workingArea;
-            if (InWindow || Config.ShowInWindow)
-            {
-                if (form != null) workingArea = new Rectangle(form.Location, form.Size);
-                else if (owner != null && Mercury.ToolCore.Platform.Win32.GetWindowRect(owner.Handle, out var rect)) workingArea = new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-                else throw new Exception("未找到窗口");
-            }
-            else if (form != null) workingArea = Screen.FromControl(form).WorkingArea;
-            else workingArea = Screen.FromHandle(owner.Handle).WorkingArea;
+            if (InWindow || Config.ShowInWindow) workingArea = new Rectangle(form.Location, form.Size);
+            else workingArea = Screen.FromControl(form).WorkingArea;
             key = Align.ToString() + "|" + workingArea.X + "|" + workingArea.Y + "|" + workingArea.Right + "|" + workingArea.Bottom;
             int width = TargetRect.Width, height = TargetRect.Height;
             switch (Align)
@@ -510,7 +504,7 @@ namespace AntdUI
 
         static bool Open(Notification.Config config)
         {
-            if (config.Owner != null || config.Form.IsHandleCreated)
+            if (config.Form.IsHandleCreated)
             {
                 string? key = null;
                 if (config.ID != null)
@@ -524,7 +518,7 @@ namespace AntdUI
                     }
                 }
                 bool ishand = false;
-                var action = new Action(() =>
+                config.Form.Invoke(new Action(() =>
                 {
                     var from = new NotificationFrm(config, key);
                     if (from.IInit())
@@ -535,14 +529,9 @@ namespace AntdUI
                     else
                     {
                         if (config.TopMost) from.Show();
-                        else if (config.Owner != null) from.Show(config.Owner);
                         else from.Show(config.Form);
                     }
-                });
-                if (config.Form != null)
-                    config.Form.Invoke(action);
-                else
-                    action();
+                }));
                 if (ishand)
                 {
                     queue_cache.Enqueue(config);
@@ -554,7 +543,7 @@ namespace AntdUI
 
         static bool Open(Message.Config config)
         {
-            if (config.Owner != null || config.Form.IsHandleCreated)
+            if (config.Form.IsHandleCreated)
             {
                 string? key = null;
                 if (config.ID != null)
@@ -568,7 +557,7 @@ namespace AntdUI
                     }
                 }
                 bool ishand = false;
-                var action = new Action(() =>
+                config.Form.Invoke(new Action(() =>
                 {
                     var from = new MessageFrm(config, key);
                     if (from.IInit())
@@ -579,14 +568,9 @@ namespace AntdUI
                     else
                     {
                         if (config.TopMost) from.Show();
-                        else if (config.Owner != null) from.Show(config.Owner);
                         else from.Show(config.Form);
                     }
-                });
-                if (config.Form != null)
-                    config.Form.Invoke(action);
-                else
-                    action();
+                }));
                 if (ishand)
                 {
                     queue_cache.Enqueue(config);

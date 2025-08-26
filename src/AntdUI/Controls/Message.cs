@@ -73,15 +73,6 @@ namespace AntdUI
         public static void error(Form form, string text, Font? font = null, int? autoClose = null) => open(new Config(form, text, TType.Error, font, autoClose));
 
         /// <summary>
-        /// 失败提示
-        /// </summary>
-        /// <param name="owner">窗口</param>
-        /// <param name="text">提示内容</param>
-        /// <param name="font">字体</param>
-        /// <param name="autoClose">自动关闭时间（秒）0等于不关闭</param>
-        public static void error(IWin32Window? owner, string text, Font? font = null, int? autoClose = null) => open(new Config(owner, text, TType.Error, font, autoClose));
-
-        /// <summary>
         /// 加载提示
         /// </summary>
         /// <param name="form">窗口</param>
@@ -190,14 +181,6 @@ namespace AntdUI
                 Icon = _icon;
                 if (autoClose.HasValue) AutoClose = autoClose.Value;
             }
-            public Config(IWin32Window owner, string _text, TType _icon, Font? _font, int? autoClose)
-            {
-                Owner = owner;
-                Font = _font;
-                Text = _text;
-                Icon = _icon;
-                if (autoClose.HasValue) AutoClose = autoClose.Value;
-            }
 
             /// <summary>
             /// ID
@@ -208,11 +191,6 @@ namespace AntdUI
             /// 所属窗口
             /// </summary>
             public Form? Form { get; set; }
-
-            /// <summary>
-            /// 所有者窗口
-            /// </summary>
-            public IWin32Window? Owner { get; set; }
 
             string? text;
             /// <summary>
@@ -516,7 +494,7 @@ namespace AntdUI
         ITask? ThreadLoading;
         public bool IInit()
         {
-            if (SetPosition(config.Form, config.Owner, config.ShowInWindow ?? Config.ShowInWindowByMessage)) return true;
+            if (SetPosition(config.Form, config.ShowInWindow ?? Config.ShowInWindowByMessage)) return true;
             if (loading)
             {
                 ThreadLoading = new ITask(this, i =>
