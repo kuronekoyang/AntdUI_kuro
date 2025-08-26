@@ -20,3 +20,4 @@ bin-release/
 /.vs
 /packages
 *.snk
+.idea

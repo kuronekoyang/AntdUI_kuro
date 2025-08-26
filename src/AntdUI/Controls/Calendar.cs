@@ -392,7 +392,7 @@ namespace AntdUI
                             Invalidate();
                             return;
                         }
-#if NET40 || NET46 || NET48
+#if NET40 || NET46 || NET472 || NET48
                         foreach (var it in dir) badge_list.Add(it.Date, it);
 #else
                         foreach (var it in dir) badge_list.TryAdd(it.Date, it);

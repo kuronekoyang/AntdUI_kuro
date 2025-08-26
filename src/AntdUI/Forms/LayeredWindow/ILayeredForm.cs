@@ -393,7 +393,7 @@ namespace AntdUI
             }
             else if (m.Msg == 0x100 && KeyCall != null)
             {
-                //0x100 (WM_KEYDOWN) 
+                //0x100 (WM_KEYDOWN)
                 //0x101 (WM_KEYUP)
                 var keys = (Keys)(int)m.WParam;
                 return KeyCall.Invoke(keys);
@@ -603,7 +603,7 @@ namespace AntdUI
 
         #region 委托
 
-#if NET40 || NET46 || NET48
+#if NET40 || NET46 || NET472 || NET48
 
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public IAsyncResult BeginInvoke(Action method) => BeginInvoke(method, null);

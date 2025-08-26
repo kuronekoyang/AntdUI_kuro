@@ -1399,7 +1399,7 @@ namespace AntdUI
                 case Win32.WM_IME_COMPOSITION:
                     if (((int)m.LParam & Win32.GCS_RESULTSTR) == Win32.GCS_RESULTSTR)
                     {
-#if NET40 || NET46 || NET48 || NET6_0
+#if NET40 || NET46 || NET472 || NET48 || NET6_0
                         m.Result = (IntPtr)1;
 #else
                         m.Result = 1;

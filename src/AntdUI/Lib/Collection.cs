@@ -670,7 +670,7 @@ namespace AntdUI
             }
         }
 
-#if NET40 || NET46 || NET48
+#if NET40 || NET46 || NET472 || NET48
         public bool Try<T>(out T? val)
 #else
         public bool Try<T>([System.Diagnostics.CodeAnalysis.NotNullWhen(true)] out T? val)
