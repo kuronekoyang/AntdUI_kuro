@@ -291,6 +291,16 @@ namespace AntdUI
             /// </summary>
             public Form? Form { get; set; }
 
+            public Rectangle Rectangle
+            {
+                get
+                {
+                    if (Form is Window window)
+                        return new(window.Location, window.Size);
+                    return new(Form.Location, Form.Size);
+                }
+            }
+
             /// <summary>
             /// 标题
             /// </summary>

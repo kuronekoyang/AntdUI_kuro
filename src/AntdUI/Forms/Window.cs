@@ -238,7 +238,7 @@ namespace AntdUI
         /// 获取或设置窗体的位置
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public new Point Location
+        public new virtual Point Location
         {
             get
             {
@@ -283,18 +283,18 @@ namespace AntdUI
         /// <summary>
         /// 控件的右坐标
         /// </summary>
-        public new int Right => ScreenRectangle.Right;
+        public new int Right => Location.X + Size.Width;
 
         /// <summary>
         /// 控件的底部坐标
         /// </summary>
-        public new int Bottom => ScreenRectangle.Bottom;
+        public new int Bottom => Location.Y + Size.Height;
 
         /// <summary>
         /// 获取或设置窗体的大小
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Size Size
+        public new virtual Size Size
         {
             get
             {
