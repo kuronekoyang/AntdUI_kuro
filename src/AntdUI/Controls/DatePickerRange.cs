@@ -29,6 +29,7 @@ namespace AntdUI
     /// <summary>
     /// DatePickerRange 日期范围选择框
     /// </summary>
+    /// <seealso cref="Input"/>
     /// <remarks>输入或选择日期范围的控件。</remarks>
     [Description("DatePickerRange 日期范围选择框")]
     [ToolboxItem(true)]
@@ -141,6 +142,12 @@ namespace AntdUI
         /// </summary>
         [Description("时间值水平对齐"), Category("外观"), DefaultValue(false)]
         public bool ValueTimeHorizontal { get; set; }
+
+        /// <summary>
+        /// 交互重置（是否每次都开始时间选择）
+        /// </summary>
+        [Description("交互重置（是否每次都开始时间选择）"), Category("外观"), DefaultValue(true)]
+        public bool InteractiveReset { get; set; } = true;
 
         /// <summary>
         /// 选择器类型
