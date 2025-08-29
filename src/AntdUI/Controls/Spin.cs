@@ -350,18 +350,10 @@ namespace AntdUI
             Font = _control.Font;
             config = _config;
             _control.SetTopMost(Handle);
-            if (_control is Window window)
+            if (_control is Form form)
             {
-                SetSize(window.Size);
-                SetLocation(window.Location);
-                if (_config.Radius.HasValue) Radius = _config.Radius.Value;
-                else if (_control is IControl icontrol) RenderRegion = () => icontrol.RenderRegion;
-                else HasBor = window.FormFrame(out Radius, out Bor);
-            }
-            else if (_control is Form form)
-            {
-                SetSize(form.Size);
-                SetLocation(form.Location);
+                SetSize(form.GetSize_Virtual());
+                SetLocation(form.GetLocation_Virtual());
                 if (_config.Radius.HasValue) Radius = _config.Radius.Value;
                 else if (_control is IControl icontrol) RenderRegion = () => icontrol.RenderRegion;
                 else HasBor = form.FormFrame(out Radius, out Bor);

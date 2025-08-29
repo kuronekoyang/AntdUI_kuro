@@ -398,9 +398,8 @@ namespace AntdUI
             else
             {
                 StartPosition = FormStartPosition.Manual;
-                var rect = config.Rectangle;
-                Top = rect.Top + (rect.Height - Height) / 2;
-                Left = rect.Left + (rect.Width - Width) / 2;
+                Top = config.Form.GetTop_Virtual() + (config.Form.GetHeight_Virtual() - Height) / 2;
+                Left = config.Form.GetLeft_Virtual() + (config.Form.GetWidth_Virtual() - Width) / 2;
             }
         }
 
