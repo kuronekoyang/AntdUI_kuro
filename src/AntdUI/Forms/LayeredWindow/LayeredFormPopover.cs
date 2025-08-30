@@ -27,7 +27,7 @@ using System.Windows.Forms;
 
 namespace AntdUI
 {
-    internal class LayeredFormPopover : ILayeredFormOpacity
+    internal partial class LayeredFormPopover : ILayeredFormOpacity
     {
         Popover.Config config;
         public override bool MessageEnable => true;

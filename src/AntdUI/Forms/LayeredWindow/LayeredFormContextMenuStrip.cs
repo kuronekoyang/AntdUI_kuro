@@ -336,7 +336,7 @@ namespace AntdUI
                         {
                             using (var path = Helper.RoundPath(it.Rect, Radius))
                             {
-                                g.Fill(Colour.PrimaryBg.Get("ContextMenuStrip"), path);
+                                g.Fill(Colour.PrimaryBgHover.Get("ContextMenuStrip"), path);
                             }
                         }
                         if (item.Enabled)

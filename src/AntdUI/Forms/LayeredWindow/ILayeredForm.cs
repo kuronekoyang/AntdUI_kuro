@@ -25,7 +25,7 @@ using System.Windows.Forms;
 
 namespace AntdUI
 {
-    public abstract class ILayeredForm : Form, IMessageFilter
+    public abstract partial class ILayeredForm : Form, IMessageFilter
     {
         IntPtr? handle;
         IntPtr memDc;
@@ -75,6 +75,7 @@ namespace AntdUI
         bool FunRun = true;
         protected override void Dispose(bool disposing)
         {
+            Extension_Pre_Dispose(disposing);
             handle = null;
             FunRun = false;
             Application.RemoveMessageFilter(this);
@@ -282,6 +283,7 @@ namespace AntdUI
         {
             try
             {
+                Extension_Pre_IClose(isdispose);
                 if (IsDisposed) return;
                 if (InvokeRequired)
                 {

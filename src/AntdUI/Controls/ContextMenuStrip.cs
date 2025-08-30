@@ -27,7 +27,7 @@ namespace AntdUI
     /// <summary>
     /// 右键菜单
     /// </summary>
-    public static class ContextMenuStrip
+    public static partial class ContextMenuStrip
     {
         /// <summary>
         /// ContextMenuStrip 右键菜单
@@ -78,7 +78,7 @@ namespace AntdUI
         /// <summary>
         /// 配置
         /// </summary>
-        public class Config
+        public partial class Config
         {
             public Config(Control control, Action<ContextMenuStripItem> call, IContextMenuStripItem[] items, int sleep = 0)
             {

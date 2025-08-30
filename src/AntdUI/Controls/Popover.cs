@@ -28,7 +28,7 @@ namespace AntdUI
     /// Popover 气泡卡片
     /// </summary>
     /// <remarks>弹出气泡式的卡片浮层。</remarks>
-    public static class Popover
+    public static partial class Popover
     {
         /// <summary>
         /// Popover 气泡卡片
@@ -83,7 +83,7 @@ namespace AntdUI
         /// <summary>
         /// 配置
         /// </summary>
-        public class Config
+        public partial class Config
         {
             /// <summary>
             /// Popover 配置
