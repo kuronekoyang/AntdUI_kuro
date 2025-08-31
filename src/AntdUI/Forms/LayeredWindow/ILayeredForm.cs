@@ -339,6 +339,7 @@ namespace AntdUI
 
         public bool PreFilterMessage(ref System.Windows.Forms.Message m)
         {
+            if (DisablePreMessageFilter) return false;
             //if (m.Msg == 0x31f || m.Msg == 0xc31a || m.Msg == 0x60 || m.Msg == 0xf || m.Msg == 0xc0a2 || m.Msg == 0x118 || m.Msg == 0x113) return false;
             //0x2a1 (WM_MOUSEHOVER)
             //0x2a3 (WM_MOUSELEAVE)

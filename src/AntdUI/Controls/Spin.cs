@@ -352,8 +352,8 @@ namespace AntdUI
             _control.SetTopMost(Handle);
             if (_control is Form form)
             {
-                SetSize(form.GetSize_Virtual());
-                SetLocation(form.GetLocation_Virtual());
+                SetSize(form.RealSize());
+                SetLocation(form.RealLocation());
                 if (_config.Radius.HasValue) Radius = _config.Radius.Value;
                 else HasBor = form.FormFrame(out Radius, out Bor);
             }
