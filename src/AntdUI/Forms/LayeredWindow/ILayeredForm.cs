@@ -298,6 +298,7 @@ namespace AntdUI
                     return;
                 }
                 countClose++;
+                if (countClose < 1) return;
                 Close();
             }
             catch { }

@@ -41,7 +41,7 @@ namespace AntdUI
             topMost = config.Control.SetTopMost(Handle);
             Font = config.Font ?? config.Control.Font;
 
-            Helper.GDI(g =>
+            _ctorGDI = Helper.MakeGDI(g =>
             {
                 var dpi = Config.Dpi;
 
@@ -50,28 +50,30 @@ namespace AntdUI
                 Padding = new Padding(paddingx, paddingy, paddingx, paddingy);
                 if (config.Content is Control control)
                 {
+                    var backupSize = control.Size;
                     control.Parent = this;
                     control.BackColor = Colour.BgElevated.Get("Popover");
                     control.ForeColor = Colour.Text.Get("Popover");
                     Helper.DpiAuto(config.Dpi ?? Config.Dpi, control);
-                    int w = control.Width;
+                    int w = backupSize.Width;
                     int h;
                     if (_config.Title == null)
                     {
-                        h = control.Height;
-                        rectContent = new Rectangle(paddingx, paddingy, w, control.Height);
+                        h = backupSize.Height;
+                        rectContent = new Rectangle(paddingx, paddingy, w, backupSize.Height);
                     }
                     else
                     {
                         using (var fontTitle = new Font(Font.FontFamily, Font.Size, FontStyle.Bold))
                         {
                             var sizeTitle = g.MeasureString(config.Title, fontTitle, w);
-                            h = sizeTitle.Height + sp + control.Height;
+                            h = sizeTitle.Height + sp + backupSize.Height;
                             rectTitle = new Rectangle(paddingx, paddingy, w, sizeTitle.Height + sp);
                             rectContent = new Rectangle(rectTitle.X, rectTitle.Bottom, w, h - sizeTitle.Height - sp);
                         }
                     }
-                    tempContent = new Bitmap(control.Width, control.Height);
+                    tempContent?.Dispose();
+                    tempContent = new Bitmap(backupSize.Width, backupSize.Height);
                     control.Size = new Size(tempContent.Width, tempContent.Height);
                     control.DrawToBitmap(tempContent, new Rectangle(0, 0, tempContent.Width, tempContent.Height));
                     SetSize(w + paddingx2, h + paddingy2);
@@ -206,6 +208,7 @@ namespace AntdUI
         {
             var flocation = new Point(TargetRect.Location.X + rectContent.X, TargetRect.Location.Y + rectContent.Y);
             var fsize = new Size(rectContent.Width, rectContent.Height);
+            form?.Dispose();
             form = new DoubleBufferForm(this, control, config.Focus)
             {
                 FormBorderStyle = FormBorderStyle.None,

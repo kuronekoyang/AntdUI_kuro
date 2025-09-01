@@ -26,7 +26,7 @@ using System.Windows.Forms;
 
 namespace AntdUI
 {
-    internal class LayeredFormContextMenuStrip : ILayeredShadowFormOpacity, SubLayeredForm
+    internal partial class LayeredFormContextMenuStrip : ILayeredShadowFormOpacity, SubLayeredForm
     {
         ContextMenuStrip.Config config;
         public override bool MessageEnable => true;
