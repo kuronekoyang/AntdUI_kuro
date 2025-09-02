@@ -58,9 +58,10 @@ namespace AntdUI
         Action actionLoadMessage;
         public virtual void LoadMessage()
         {
+            if (IsDisposed) return;
             if (InvokeRequired)
             {
-                Invoke(actionLoadMessage);
+                Invoke(CreateSafeActionLoadMessage());
                 return;
             }
             if (MessageEnable) Application.AddMessageFilter(this);

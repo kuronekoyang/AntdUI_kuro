@@ -25,7 +25,7 @@ using System.Windows.Forms;
 
 namespace AntdUI
 {
-    internal class LayeredFormSelectDown : ILayeredShadowForm, SubLayeredForm
+    internal partial class LayeredFormSelectDown : ILayeredShadowForm, SubLayeredForm
     {
         TAMode ColorScheme;
         string keyid;
@@ -598,7 +598,15 @@ namespace AntdUI
                 int maxh = item_height * item_count + padd2;
                 if (divider_count > 0) maxh += divider_count * (padd2 + sp);
                 int h = maxh, w = maxw + padd2 + gap_x2;
-                if (MaxCount > 0 && item_count > MaxCount)
+                if (MaxHeight.HasValue && maxh > MaxHeight.Value)
+                {
+                    if (autoWidth) w += ScrollBar.SIZE - padd;
+                    h = MaxHeight.Value;
+                    ScrollBar.SizeChange(new Rectangle(0, 0, w, h));
+                    ScrollBar.SetVrSize(0, maxh);
+                    if (sy > 0) ScrollBar.ValueY = sy;
+                }
+                else if (MaxCount > 0 && item_count > MaxCount)
                 {
                     if (autoWidth) w += ScrollBar.SIZE - padd;
                     h = item_height * MaxCount + padd2;
@@ -871,7 +879,7 @@ namespace AntdUI
             {
                 selectedValue = it.Tag;
                 OnCall(it);
-                IClose();
+                if (ClickClose) IClose(); else Print();
                 return true;
             }
             else
@@ -887,6 +895,7 @@ namespace AntdUI
         }
         void OnCall(ObjectItem it)
         {
+            OnSelectChanged?.Invoke(it.I, it.Tag);
             if (PARENT is Select select) select.DropDownChange(select_x, it.I, it.Tag, it.Select, it.Text);
             else if (PARENT is Dropdown dropdown) dropdown.DropDownChange(it.Tag);
             else if (PARENT is Tabs tabs)

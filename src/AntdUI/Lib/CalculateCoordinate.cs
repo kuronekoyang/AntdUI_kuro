@@ -22,7 +22,7 @@ using System.Windows.Forms;
 
 namespace AntdUI
 {
-    public class CalculateCoordinate
+    public partial class CalculateCoordinate
     {
         public CalculateCoordinate(Control control, Rectangle drop, int ArrowSize, int Shadow, int Shadow2, Rectangle? rect_real = null)
         {

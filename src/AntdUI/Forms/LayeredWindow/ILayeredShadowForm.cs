@@ -24,7 +24,7 @@ using System.Windows.Forms;
 
 namespace AntdUI
 {
-    public abstract class ILayeredShadowForm : ILayeredFormOpacityDown
+    public abstract partial class ILayeredShadowForm : ILayeredFormOpacityDown
     {
         public int shadow = 0, shadow2 = 0;
         bool ShadowEnabled = Config.ShadowEnabled;
