@@ -1087,6 +1087,7 @@ namespace AntdUI
                                     if (AnimationHoverValue > alpha) AnimationHoverValue = alpha;
                                     else AnimationHoverValue -= addvalue;
                                     if (AnimationHoverValue < 1) { AnimationHoverValue = 0; return false; }
+                                    if (!IsHandleCreated) return false;
                                     Invalidate();
                                     return true;
                                 }, 10, () =>
