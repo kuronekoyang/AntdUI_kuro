@@ -61,6 +61,7 @@ namespace AntdUI
             if (IsDisposed) return;
             if (InvokeRequired)
             {
+                if (!IsHandleCreated) return;
                 Invoke(CreateSafeActionLoadMessage());
                 return;
             }
