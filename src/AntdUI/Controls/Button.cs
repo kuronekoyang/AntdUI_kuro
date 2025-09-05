@@ -34,7 +34,7 @@ namespace AntdUI
     [Description("Button 按钮")]
     [ToolboxItem(true)]
     [DefaultProperty("Text")]
-    public class Button : IControl, IButtonControl, IEventListener
+    public partial class Button : IControl, IButtonControl, IEventListener
     {
         public Button() : base(ControlType.Button)
         {
@@ -1604,7 +1604,7 @@ namespace AntdUI
                         }
                         else if (has_left)
                         {
-                            rect_text = RectAlignL(g, txt_height, textLine, textCenterHasIcon, Font, iconPosition, iconratio, icongap, font_size, rect_read, out var rect_l);
+                            rect_text = RectAlignL(g, txt_height, textLine, textCenterHasIcon, Font, iconPosition, iconratio, icongap, font_size, rect_read, out var rect_l, textAlign);
                             if (has_loading)
                             {
                                 float loading_size = rect_l.Height * .14F;
@@ -1634,7 +1634,7 @@ namespace AntdUI
                 {
                     if (has_loading)
                     {
-                        rect_text = RectAlignL(g, txt_height, textLine, textCenterHasIcon, Font, iconPosition, iconratio, icongap, font_size, rect_read, out var rect_l);
+                        rect_text = RectAlignL(g, txt_height, textLine, textCenterHasIcon, Font, iconPosition, iconratio, icongap, font_size, rect_read, out var rect_l, textAlign);
                         float loading_size = rect_l.Height * .14F;
                         using (var brush = new Pen(color, loading_size))
                         {
@@ -1670,7 +1670,7 @@ namespace AntdUI
             }
         }
 
-        internal static Rectangle RectAlignL(Canvas g, int font_Height, bool multiLine, bool textCenter, Font font, TAlignMini iconPosition, float iconratio, float icongap, Size font_size, Rectangle rect_read, out Rectangle rect_l)
+        internal static Rectangle RectAlignL(Canvas g, int font_Height, bool multiLine, bool textCenter, Font font, TAlignMini iconPosition, float iconratio, float icongap, Size font_size, Rectangle rect_read, out Rectangle rect_l, ContentAlignment text_align)
         {
             int icon_size = (int)(font_Height * iconratio), sp = (int)(font_Height * icongap);
             if (multiLine && (iconPosition == TAlignMini.Left || iconPosition == TAlignMini.Right))
@@ -1711,23 +1711,23 @@ namespace AntdUI
                 switch (iconPosition)
                 {
                     case TAlignMini.Top:
-                        int t_x = rect_read.Y + ((rect_read.Height - (font_size.Height + icon_size + sp)) / 2);
+                        int t_x = rect_read.Y + TheCorrectVerticalLayout(rect_read.Height, font_size.Height, icon_size, sp, text_align);
                         rect_text = new Rectangle(rect_read.X, t_x + icon_size + sp, rect_read.Width, font_size.Height);
                         rect_l = new Rectangle(rect_read.X + (rect_read.Width - icon_size) / 2, t_x, icon_size, icon_size);
                         break;
                     case TAlignMini.Bottom:
-                        int b_x = rect_read.Y + ((rect_read.Height - (font_size.Height + icon_size + sp)) / 2);
+                        int b_x = rect_read.Y + TheCorrectVerticalLayout(rect_read.Height, font_size.Height, icon_size, sp, text_align);
                         rect_text = new Rectangle(rect_read.X, b_x, rect_read.Width, font_size.Height);
                         rect_l = new Rectangle(rect_read.X + (rect_read.Width - icon_size) / 2, b_x + font_size.Height + sp, icon_size, icon_size);
                         break;
                     case TAlignMini.Right:
-                        int r_x = rect_read.X + ((rect_read.Width - (font_size.Width + icon_size + sp)) / 2);
+                        int r_x = rect_read.X + TheCorrectHorizontalLayout(rect_read.Width, font_size.Width, icon_size, sp, text_align);
                         rect_text = new Rectangle(r_x, rect_read.Y, font_size.Width, rect_read.Height);
                         rect_l = new Rectangle(r_x + font_size.Width + sp, rect_read.Y + (rect_read.Height - icon_size) / 2, icon_size, icon_size);
                         break;
                     case TAlignMini.Left:
                     default:
-                        int l_x = rect_read.X + ((rect_read.Width - (font_size.Width + icon_size + sp)) / 2);
+                        int l_x = rect_read.X + TheCorrectHorizontalLayout(rect_read.Width, font_size.Width, icon_size, sp, text_align);
                         rect_text = new Rectangle(l_x + icon_size + sp, rect_read.Y, font_size.Width, rect_read.Height);
                         rect_l = new Rectangle(l_x, rect_read.Y + (rect_read.Height - icon_size) / 2, icon_size, icon_size);
                         break;

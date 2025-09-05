@@ -318,7 +318,7 @@ namespace AntdUI
                     }
                     else if (has_left)
                     {
-                        rect_text = Button.RectAlignL(g, txt_height, textLine, false, font, btn.IconPosition, btn.IconRatio, btn.IconGap, font_size, rect_read, out var rect_l);
+                        rect_text = Button.RectAlignL(g, txt_height, textLine, false, font, btn.IconPosition, btn.IconRatio, btn.IconGap, font_size, rect_read, out var rect_l, ContentAlignment.MiddleCenter);
                         PaintButtonPaintImage(g, btn, color, rect_l);
                     }
                     else
