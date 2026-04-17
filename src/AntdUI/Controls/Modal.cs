@@ -430,6 +430,11 @@ namespace AntdUI
             /// </summary>
             public bool Draggable { get; set; } = true;
 
+            /// <summary>
+            /// 是否置顶
+            /// </summary>
+            public bool TopMost { get; set; }
+
             #region 自定义按钮
 
             /// <summary>
@@ -631,6 +636,11 @@ namespace AntdUI
             public Config SetDraggable(bool value = false)
             {
                 Draggable = value;
+                return this;
+            }
+            public Config SetTopMost(bool value = true)
+            {
+                TopMost = value;
                 return this;
             }
 

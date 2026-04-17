@@ -42,7 +42,7 @@ namespace AntdUI
             Resizable = false;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             config = _config;
-            if (config.Form != null) TopMost = config.Form.TopMost;
+            if (config.TopMost || (config.Form != null && config.Form.TopMost)) TopMost = true;
             close_button = new ITaskOpacity(nameof(AntdUI.Modal), this);
 
             #region InitializeComponent
